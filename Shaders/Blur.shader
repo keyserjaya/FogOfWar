@@ -76,7 +76,7 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				float2 uv = (0, 0);
+				float2 uv = float2(0, 0);
 				float value = 0;
 				int count = 0;
 				for (int y = -_BlurRadius; y < _BlurRadius; y++)
@@ -106,7 +106,7 @@
 
 				value /= _PastTexCount + 1;
 
-				return value;
+				return float4(value, value, value, 1);
 			}
 			ENDCG
 		}

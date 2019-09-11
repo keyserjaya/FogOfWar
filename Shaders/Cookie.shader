@@ -28,7 +28,7 @@
                 float4 vertex : SV_POSITION;
             };
 
-			float _Data[223];
+			float _Data[259];
 			//float _Data_2[131];
 
             v2f vert (appdata v)
@@ -41,6 +41,9 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
+				//return abs(i.uv[1] - _Data[2]);
+				//return (pow(pow(i.uv[0] - _Data[1], 2) + pow(i.uv[1] - _Data[2], 2), 0.5));
+
 				float pi = 3.14159265;
 				float resolution = _Data[0];
 				float tani = (i.uv[1] - _Data[2]) / (i.uv[0] - _Data[1]);
@@ -60,7 +63,7 @@
 				float index = angle / (2 * pi / resolution);
 
 				float x, y;
-
+				
 				if ((int)index + 1 >= resolution)
 				{
 					x = _Data[3 + ((int)index * 2)] + (_Data[3] - _Data[3 + ((int)index * 2)]) * (index - (int)index);
@@ -71,12 +74,12 @@
 					x = _Data[3 + ((int)index * 2)] + (_Data[3 + (((int)index + 1) * 2)] - _Data[3 + ((int)index * 2)]) * (index - (int)index);
 					y = _Data[4 + ((int)index * 2)] + (_Data[4 + (((int)index + 1) * 2)] - _Data[4 + ((int)index * 2)]) * (index - (int)index);
 				}
-
 				float value = pow(pow(x - _Data[1], 2) + pow(y - _Data[2], 2), 0.5);
+
 				float dist = (pow(pow(i.uv[0] - _Data[1], 2) + pow(i.uv[1] - _Data[2], 2), 0.5));
 				if (dist > value)
 				{
-					return 0.05;
+					return float4(0.05, 0.05, 0.05, 1);
 				}
 				return 1;
             }
